@@ -7,14 +7,14 @@ import api from '../../globals/interceptors';
 
 const Profile = ({ isEdit, formData, onClose }) => {
   const [messageApi, contextHolder] = message.useMessage();
-  const [profileData,setProfileData] = useState()
+  const [profileData, setProfileData] = useState()
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [profileImage, setProfileImage] = useState('')
   const [form] = Form.useForm();
   const onFinish = (values) => {
     setConfirmLoading(true);
     const employeeApiCall = (values) => {
-      
+
       if (isEdit) {
         values.id = formData.id;
         api.put(`/api/v1/profile/`, values)
@@ -100,31 +100,29 @@ const Profile = ({ isEdit, formData, onClose }) => {
   };
 
   useEffect(() => {
-    return () => {
-      if (formData?.hasOwnProperty('id') && formData?.id > 0) {
-        api.get(`/api/v1/employee/${formData?.id}`)
-          .then(response => {
-            if (response?.data?.success && response?.data?.message?.length) {
-              const data = response?.data?.message[0];
-              setProfileData(data)
-              const profile_image = data?.profile_image;
-              if (profile_image !== '' && profile_image !== null && profile_image !== undefined) {
-                getPresignedURL(profile_image).then(result => {
-                  if (result.success) {
-                    setProfileImage(result?.message);
-                  }
-                })
-              }
-              form.setFieldsValue({ firstName: data?.first_name, lastName: data?.last_name, email: data?.email, departmentId: data?.department_id, contactNumber: data?.contact_number,  });
+    if (isEdit && formData?.hasOwnProperty('id') && formData?.id > 0) {
+      api.get(`/api/v1/employee/${formData?.id}`)
+        .then(response => {
+          if (response?.data?.success && response?.data?.message?.length) {
+            const data = response?.data?.message[0];
+            setProfileData(data)
+            const profile_image = data?.profile_image;
+            if (profile_image !== '' && profile_image !== null && profile_image !== undefined) {
+              getPresignedURL(profile_image).then(result => {
+                if (result.success) {
+                  setProfileImage(result?.message);
+                }
+              })
             }
-          })
-          .catch(error => {
-            console.error('Error fetching employees:', error);
-          });
-      }
+            form.setFieldsValue({ firstName: data?.first_name, lastName: data?.last_name, email: data?.email, departmentId: data?.department_id, contactNumber: data?.contact_number, });
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching employees:', error);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit])
+  }, [isEdit, formData])
 
 
   const [fileList, setFileList] = useState([]);
