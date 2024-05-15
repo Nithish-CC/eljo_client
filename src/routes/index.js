@@ -23,20 +23,7 @@ const Rotuers = () => {
         }
     }, [token])
 
-    console.log(decodedValue);
-
-
     const TopHeader = () => {
-        // if (isEmpty(localStorage.getItem(APP_VARIABLES.ACCESS_TOKEN))) {
-        //     window.location.replace("/");
-        //     return <>Login</>;
-        // } else {
-        //     const expiryDate = localStorage.getItem(APP_VARIABLES.SESSION_EXPIRY);
-        //     if (expiryDate) {
-        //         checkSessionExpiry();
-        //     } else {
-        //         window.location.replace("/");
-        //     }
         return (
             <React.Fragment>
                 <AppHeader />

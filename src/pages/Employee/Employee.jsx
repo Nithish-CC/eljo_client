@@ -116,7 +116,6 @@ const Employee = () => {
   }, [departmentId]);
 
   const showDrawer = (record) => {
-    console.log(record)
     setVisible(true);
     setIsEdit(!!record);
     setFormData(record || {});
@@ -154,14 +153,13 @@ const Employee = () => {
         })
         .catch(error => {
           messageApi.open({
-            type: 'success',
+            type: 'error',
             content: 'Failed to delete Employee',
           });
           fetchEmployees();
           console.error('Error fetching employees:', error);
         });
     }
-    console.log('Deleting record:', deleteRecord);
     setDeleteModalVisible(false);
   };
 

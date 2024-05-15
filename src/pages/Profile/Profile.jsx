@@ -6,7 +6,6 @@ import { deleteBucketImage, getPresignedURL, handleUpload } from '../../utils/s3
 import api from '../../globals/interceptors';
 
 const Profile = ({ isEdit, formData, onClose }) => {
-  console.log(formData)
   const [messageApi, contextHolder] = message.useMessage();
   const [profileData,setProfileData] = useState()
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -15,7 +14,7 @@ const Profile = ({ isEdit, formData, onClose }) => {
   const onFinish = (values) => {
     setConfirmLoading(true);
     const employeeApiCall = (values) => {
-      console.log(values)
+      
       if (isEdit) {
         values.id = formData.id;
         api.put(`/api/v1/profile/`, values)
@@ -30,7 +29,6 @@ const Profile = ({ isEdit, formData, onClose }) => {
             }, 2000);
           })
           .catch(error => {
-            console.log(error)
             setConfirmLoading(false);
             messageApi.open({
               type: 'error',
@@ -64,7 +62,6 @@ const Profile = ({ isEdit, formData, onClose }) => {
       handleUpload(fileList[0]?.originFileObj)
         .then(result => {
           if (result.success) {
-            console.log('Upload succeeded:', result.message);
             values.profileImage = result?.message?.key;
             employeeApiCall(values);
             if (profileImage !== '' && profileImage !== null && profileImage !== undefined) {
@@ -103,7 +100,6 @@ const Profile = ({ isEdit, formData, onClose }) => {
   };
 
   useEffect(() => {
-    console.log(formData)
     return () => {
       if (formData?.hasOwnProperty('id') && formData?.id > 0) {
         api.get(`/api/v1/employee/${formData?.id}`)
@@ -130,7 +126,6 @@ const Profile = ({ isEdit, formData, onClose }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit])
 
-  console.log(profileImage)
 
   const [fileList, setFileList] = useState([]);
 
@@ -147,8 +142,6 @@ const Profile = ({ isEdit, formData, onClose }) => {
 
   const handleChange = (info) => {
     setFileList(info?.fileList)
-    console.log(info?.fileList)
-    console.log(info?.fileList[0]?.originFileObj)
     setFileList(info.fileList.slice(-1)); // Keep only the latest file
   };
 

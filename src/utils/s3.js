@@ -23,10 +23,8 @@ export const handleUpload = (file) => {
 
         s3.upload(params, (err, data) => {
             if (err) {
-                console.error('Error uploading image:', err);
                 reject({ success: false, message: err });
             } else {
-                console.log('Image uploaded successfully:', data);
                 resolve({ success: true, message: data });
             }
         });
@@ -60,10 +58,8 @@ export const deleteBucketImage = (key) => {
         }
         s3.deleteObject(deleteParams, (err, data) => {
             if (err) {
-                console.error('Error uploading image:', err);
                 reject({ success: false, message: err });
             } else {
-                console.log(data);
                 resolve({ success: true, message: data });
             }
         });
