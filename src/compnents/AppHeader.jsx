@@ -1,10 +1,10 @@
-import { Image, Menu, Button, Col, Typography } from "antd";
-import { Header } from "antd/es/layout/layout";
+import { Image, Menu, Button, Col, Typography, Layout } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import { Row } from "antd";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 const { Text } = Typography;
+const { Header } = Layout;
 
 const AppHeader = () => {
 
