@@ -1,12 +1,13 @@
 import { Form, Select } from 'antd'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import api from '../../globals/interceptors';
 
 const DepartmentFilter = ({ isProfile }) => {
     const [department, setDepartment] = useState([]);
     useEffect(() => {
         return () => {
-            axios.get(process.env.REACT_APP_BASE_URL + `/api/v1/department`)
+            api.get(process.env.REACT_APP_BASE_URL + `/api/v1/department`)
                 .then(response => {
                     if (response?.data?.message.length) {
                         const data = response?.data?.message.map((item) => ({ label: item.name, value: item.id }));
