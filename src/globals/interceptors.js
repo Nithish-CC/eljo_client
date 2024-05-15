@@ -10,6 +10,11 @@ api.interceptors.request.use(
     const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      config.headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+        'Access-Control-Allow-Headers': 'Content-Type, Accept, Origin, X-Requested-With',
+      }
     }
     return config;
   },
